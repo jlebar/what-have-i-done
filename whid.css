@@ -1,0 +1,8 @@
+body {
+  font-family: sans-serif; }
+
+.input > * {
+  font-size: 16pt; }
+
+.defaultText {
+  color: gray; }
