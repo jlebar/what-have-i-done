@@ -9,3 +9,26 @@ body {
 .defaultText {
     color: gray;
 }
+
+.bugSummary {
+  &:before {
+    content: " ";
+  }
+}
+
+.bugLink {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+
+  .bugSummary {
+    color: black;
+  }
+}
+
+.bug-RESOLVED {
+  .bugId {
+    text-decoration: line-through;
+  }
+}

@@ -15,21 +15,30 @@
 <div id='requestOutput'></div>
 
 <div id='newBugs'>
-<h2>New bugs</h2>
+<h2>Filed</h2>
+<div id='newBugsList'></div>
 
-<script id="newBugsTemplate" type="text/x-handlebars-template">
-  {{#each created}}
-    <div class="bug">
-      <a class="bugLink" href="{{showBug id}}" target=_blank title="{{> bugTooltip}}">
+<h2>Patches</h2>
+<div id='patchesList'></div>
+
+<script id="bugsTemplate" type="text/x-handlebars-template">
+  {{#each bugs}}
+    <div class="bug bug-{{status}}">
+      <a class="bugLink" href="{{showBug id}}" target=_blank>
         <span class="bugId">{{id}}</span>
+        <span class="bugReason">{{reason}}</span>
+        <span class="bugSummary">{{summary}}</span>
       </a>
-      &ndash;
-      <span class="bugSummary">{{summary}}</span>
+      <div class='reviews'>
+      {{#each reviews}}
+        <span class='review'>
+          {{elem}} {{#if showCount}}(&times; {{count}}){{/if}}
+        </span>
+      {{/each}}
+      </div>
     </div>
   {{/each}}
 </script>
-
-<div id='newBugsList'></div>
 </div>
 
 </body>

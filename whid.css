@@ -6,3 +6,16 @@ body {
 
 .defaultText {
   color: gray; }
+
+.bugSummary:before {
+  content: " "; }
+
+.bugLink {
+  text-decoration: none; }
+  .bugLink:hover {
+    text-decoration: underline; }
+  .bugLink .bugSummary {
+    color: black; }
+
+.bug-RESOLVED .bugId {
+  text-decoration: line-through; }
