@@ -97,18 +97,24 @@ function initUsernameField() {
 }
 
 function getBugs(login) {
+  var reqParams = {
+    changed_after: '7d',
+    include_fields: ['id', 'summary', 'creator', 'assigned_to', 'creation_time',
+                     'status', 'keywords', 'whiteboard', 'resolution', 'attachments',
+                     'history'].join(',')
+  };
+
+  var searchFields = ['setters.login_name', /* set an attachment flag */
+                      'assigned_to', 'commenter', 'reporter'];
+  for (var i = 0; i < searchFields.length; i++) {
+    reqParams['field0-0-' + i] = searchFields[i];
+    reqParams['type0-0-' + i] = 'equals';
+    reqParams['value0-0-' + i] = login;
+  }
+
   var req = new XMLHttpRequest();
   var apiURL = 'https://api-dev.bugzilla.mozilla.org/1.1/';
-  var url = apiURL + 'bug?' + encodeReqParams({
-    email1: login,
-    email1_type: 'equals',
-    email1_assigned_to: 1,
-    email1_creator: 1,
-    email1_comment_creator: 1,
-    changed_after: '7d',
-          /*include_fields: 'id,creator,assigned_to,summary,keywords,whiteboard,status,resolution'*/
-    include_fields: 'id,summary,creator,assigned_to,creation_time,status,resolution,attachments,history'
-  });
+  var url = apiURL + 'bug?' + encodeReqParams(reqParams);
 
   if (!$('#nocache').attr('checked')) {
     var cachedResult = localStorage.getItem(url);
