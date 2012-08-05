@@ -12,15 +12,8 @@
 <div class='input'><input type='checkbox' id='nocache'></input>
 <label for='nocache'>Don't use cache</label></div>
 
-<div id='requestOutput'></div>
-
-<div id='newBugs'>
-<h2>Filed</h2>
-<div id='newBugsList'></div>
-
-<h2>Patches</h2>
-<div id='patchesList'></div>
-
+<h2>My bugs</h2>
+<div id='myBugs'></div>
 <script id="bugsTemplate" type="text/x-handlebars-template">
   {{#each bugs}}
     <div class="bug bug-{{status}}">
@@ -32,14 +25,18 @@
       <div class='reviews'>
       {{#each reviews}}
         <span class='review'>
-          {{elem}} {{#if showCount}}(&times; {{count}}){{/if}}
+          {{elem}} {{#if showCount}}&times; {{count}}{{/if}}
         </span>
       {{/each}}
       </div>
     </div>
   {{/each}}
 </script>
-</div>
+
+<h2>Reviews</h2>
+<div id='myReviews'></div>
+
+<pre id='requestOutput'></pre>
 
 </body>
 </html>

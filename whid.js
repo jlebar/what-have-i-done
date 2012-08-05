@@ -1,5 +1,6 @@
 var templates = {};
 
+// A simple multiset class
 Bag.prototype = {
   add: function(e) {
     var val = this.dict[e];
@@ -103,11 +104,10 @@ function getBugs(login) {
     email1_type: 'equals',
     email1_assigned_to: 1,
     email1_creator: 1,
-    email1_comment_author: 1,
+    email1_comment_creator: 1,
     changed_after: '7d',
-    /*include_fields: 'id,creator,assigned_to,summary,keywords,whiteboard,status,resolution'*/
-    include_fields: 'id,summary,creator,assigned_to,creation_time,status,resolution,attachments'
-    /*email1_comment_author: 1*/ // broken, bug 743275
+          /*include_fields: 'id,creator,assigned_to,summary,keywords,whiteboard,status,resolution'*/
+    include_fields: 'id,summary,creator,assigned_to,creation_time,status,resolution,attachments,history'
   });
 
   if (!$('#nocache').attr('checked')) {
@@ -155,6 +155,7 @@ function getBugsFinished(url, req, login) {
 }
 
 function displayBugs(bugs, login) {
+  $('#requestOutput').text(JSON.stringify(bugs, undefined, 2));
   var now = Date.now();
   var weekMS = 7 * 24 * 60 * 60 * 1000;
 
@@ -186,7 +187,7 @@ function displayBugs(bugs, login) {
     if (bug.attachments) {
       for (var j = 0; j < bug.attachments.length; j++) {
         var attachment = bug.attachments[j];
-        attachment.creation_time = new Date(bug.creation_time);
+        attachment.creation_time = new Date(attachment.creation_time);
 
         if (attachment.attacher.name == 'justin.lebar+bug' &&
             attachment.is_obsolete == 0 &&
@@ -246,5 +247,5 @@ function displayBugs(bugs, login) {
 
   outBugs.sort(compareBugId);
 
-  $('#newBugsList').html(templates.bugs({bugs: outBugs}));
+  $('#myBugs').html(templates.bugs({bugs: outBugs}));
 }
