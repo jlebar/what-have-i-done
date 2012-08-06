@@ -221,6 +221,27 @@ function displayBugs(bugs, login) {
       }
     }
 
+    // Look for patches that |login| has r+'ed.
+    if (bug.history) {
+      for (var j = 0; j < bug.history.length; j++) {
+        var histEntry = bug.history[j];
+        if (!histEntry.changes || !histEntry.changer ||
+            (now - new Date(histEntry.change_time)) <= weekMS ||
+            histEntry.changer.name != login) {
+          continue;
+        }
+
+        for (var k = 0; k < histEntry.changes.length; k++) {
+          var change = histEntry.changes[k];
+          if (change.added == 'feedback+' || change.added == 'feedback-' ||
+              change.added == 'review+' || change.added == 'review-') {
+            bug.reasons.push(change.added);
+            addToOutBugs();
+          }
+        }
+      }
+    }
+
     bug.reviews = bug.reviews.toArray();
     for (var j = 0; j < bug.reviews.length; j++) {
       var review = bug.reviews[j];
